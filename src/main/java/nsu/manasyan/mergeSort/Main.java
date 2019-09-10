@@ -11,5 +11,4 @@ public class Main {
         SortingService service = new SortingService(List.of("left.txt", "right.txt", "third.txt", "fourth.txt"));
         service.start("a", "i");
     }
-
 }

@@ -1,7 +1,6 @@
 package nsu.manasyan.mergeSort;
 
 import nsu.manasyan.mergeSort.util.DataExtractor;
-
 import java.io.*;
 import java.util.Comparator;
 
@@ -31,7 +30,7 @@ public class  MergeSorter <T>{
                 writer.println(leftValue);
             }
 
-            for(; rightValue != null; rightValue = extractor.get(rightReader.readLine())){
+            for(;rightValue != null; rightValue = extractor.get(rightReader.readLine())){
                 writer.println(rightValue);
             }
 

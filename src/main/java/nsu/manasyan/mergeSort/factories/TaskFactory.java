@@ -1,9 +1,8 @@
 package nsu.manasyan.mergeSort.factories;
 
-import nsu.manasyan.mergeSort.Exceptions.WrongArgumentException;
-import nsu.manasyan.mergeSort.FileManager;
+import nsu.manasyan.mergeSort.exceptions.WrongArgumentException;
+import nsu.manasyan.mergeSort.util.FileManager;
 import nsu.manasyan.mergeSort.ThreadTask;
-
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,6 @@ public class TaskFactory {
         creators.put("s", (m, c) -> new ThreadTask<String>(m,c, s->s));
         creators.put("i", (m, c) -> new ThreadTask<Integer>(m,c, s -> (s == null) ? null : Integer.valueOf(s)));
     }
-
 
     private static TaskFactory instance;
 

@@ -1,9 +1,8 @@
 package nsu.manasyan.mergeSort;
 
-import nsu.manasyan.mergeSort.Exceptions.WrongArgumentException;
+import nsu.manasyan.mergeSort.exceptions.WrongArgumentException;
 import nsu.manasyan.mergeSort.factories.TaskFactory;
-import nsu.manasyan.mergeSort.util.DataExtractor;
-
+import nsu.manasyan.mergeSort.util.FileManager;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,15 +18,10 @@ public class SortingService {
         this.fileManager = new FileManager(fileNames);
     }
 
-    public void start(String sortingMode, String contentType){
-//        var extractor = getDataExctractor(contentType);
+    public void start(String sortingMode, String contentType) {
+        var threadTask = TaskFactory.getInstance().getFileHandler(contentType, fileManager, getComparator(sortingMode));
 
-//        while (!fileManager.isFinished()){
-//            executorService.submit(new ThreadTask<>(fileManager,comparator, extractor));
-//        }
-
-        var threadTask = TaskFactory.getInstance().getFileHandler(contentType, fileManager,getComparator(sortingMode));
-        while (!fileManager.isFinished()){
+        while (!fileManager.isFinished()) {
             executorService.submit(threadTask);
         }
         executorService.shutdown();
@@ -43,15 +37,4 @@ public class SortingService {
                 throw new WrongArgumentException("Wrong sort mode");
         }
     }
-//
-//    private <T> DataExtractor<T> getDataExctractor(String contentType){
-//        switch (contentType) {
-//            case "s":
-//                return s -> (T)s;
-//            case "i":
-//                return i -> (T)Integer.valueOf(i);
-//            default:
-//                throw new WrongArgumentException("Wrong sort mode");
-//        }
-//    }
 }

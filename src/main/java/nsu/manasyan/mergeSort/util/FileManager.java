@@ -1,6 +1,4 @@
-package nsu.manasyan.mergeSort;
-
-import nsu.manasyan.mergeSort.util.Pair;
+package nsu.manasyan.mergeSort.util;
 
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;

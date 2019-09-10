@@ -1,23 +1,23 @@
 package nsu.manasyan.mergeSort;
 
 import nsu.manasyan.mergeSort.util.DataExtractor;
+import nsu.manasyan.mergeSort.util.FileManager;
 import nsu.manasyan.mergeSort.util.Pair;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Comparator;
 
 public class ThreadTask <T> implements Runnable {
 
     private FileManager fileManager;
     private Comparator<T> comparator;
-    private DataExtractor<T> extructor;
+    private DataExtractor<T> extractor;
 
-    public ThreadTask(FileManager fileManager, Comparator<T> comparator, DataExtractor<T> extructor) {
+    public ThreadTask(FileManager fileManager, Comparator<T> comparator, DataExtractor<T> extractor) {
         this.fileManager = fileManager;
         this.comparator = comparator;
-        this.extructor = extructor;
+        this.extractor = extractor;
     }
 
     @Override
@@ -27,16 +27,13 @@ public class ThreadTask <T> implements Runnable {
             return;
         }
 
-        MergeSorter<T> mergeSorter = new MergeSorter<>(extructor);
+        MergeSorter<T> mergeSorter = new MergeSorter<>(extractor);
         try {
-            String resultFileName = mergeSorter.sort(getInputStream(fileNames.getFirst()), getInputStream(fileNames.getSecond()), comparator);
+            String resultFileName = mergeSorter.sort(new FileInputStream(fileNames.getFirst()),
+                    new FileInputStream(fileNames.getSecond()), comparator);
             fileManager.putFileName(resultFileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    private InputStream getInputStream(String fileName) throws FileNotFoundException {
-        return new FileInputStream(fileName);
     }
 }
