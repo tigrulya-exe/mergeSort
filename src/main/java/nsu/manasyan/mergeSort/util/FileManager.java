@@ -37,4 +37,8 @@ public class FileManager {
     public void putFileName(String fileName){
         fileNames.add(fileName);
     }
+
+    public String  getLastFileName(){
+        return fileNames.peek();
+    }
 }

@@ -15,7 +15,7 @@ public class  MergeSorter <T>{
     }
 
     public String sort(InputStream left, InputStream right, Comparator<T> comparator){
-        String resultFileName = "tmp" + fileId++ + ".txt";
+        String resultFileName = "tmpFiles/tmp" + fileId++ + ".txt";
 
         try(BufferedReader leftReader = new BufferedReader(new InputStreamReader(left));
             BufferedReader rightReader = new BufferedReader(new InputStreamReader(right));
