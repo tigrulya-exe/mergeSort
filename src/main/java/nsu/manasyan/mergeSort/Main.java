@@ -10,8 +10,8 @@ public class Main {
 
     private static void test(){
         try {
-//            MergeSortOptions options = new CLI("-i" , "-s","in/out.txt" ,"in/left.txt", "in/right.txt", "in/third.txt", "in/fourth.txt").parse();
-            MergeSortOptions options = new CLI("-i" , "-d","in/out.txt" ,"in/left.txt", "in/right.txt").parse();
+            MergeSortOptions options = new CLI("-i" , "-d","in/out.txt" ,"in/left.txt", "in/right.txt", "in/third.txt", "in/fourth.txt").parse();
+//            MergeSortOptions options = new CLI("-i" , "-d", "in/out.txt" ,"in/left.txt", "in/right.txt").parse();
             SortingService service = new SortingService(options);
             service.start();
         } catch (Exception ex) {

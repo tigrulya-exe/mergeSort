@@ -31,6 +31,7 @@ public class SortingService {
     }
 
     public void start() throws IOException {
+        checkFilesDirectory();
         var threadTask = TaskFactory.getInstance().getThreadTask(options.getContentType(), fileManager, getComparator(options.getSortingOrder()));
 
         try {
@@ -45,6 +46,12 @@ public class SortingService {
         }
 
         brushUpFiles();
+    }
+
+    private void checkFilesDirectory() throws IOException {
+        if (!Files.exists(Path.of(FILES_DIRECTORY_NAME))) {
+            Files.createDirectory(Path.of(FILES_DIRECTORY_NAME));
+        }
     }
 
     private <T extends Comparable<T>> Comparator<T> getComparator(SortingOrder sortingOrder) {

@@ -3,7 +3,6 @@ package nsu.manasyan.mergeSort;
 import nsu.manasyan.mergeSort.util.DataExtractor;
 import nsu.manasyan.mergeSort.util.FileManager;
 import nsu.manasyan.mergeSort.util.Pair;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Comparator;
@@ -27,10 +26,10 @@ public class ThreadTask <T> implements Runnable {
             return;
         }
 
-        MergeSorter<T> mergeSorter = new MergeSorter<>(extractor);
+        MergeSorter<T> mergeSorter = new MergeSorter<>(extractor,comparator);
         try {
             String resultFileName = mergeSorter.sort(new FileInputStream(fileNames.getFirst()),
-                    new FileInputStream(fileNames.getSecond()), comparator);
+                    new FileInputStream(fileNames.getSecond()));
             fileManager.putFileName(resultFileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
