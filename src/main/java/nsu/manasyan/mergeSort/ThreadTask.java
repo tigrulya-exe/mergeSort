@@ -34,6 +34,7 @@ public class ThreadTask <T> implements Runnable {
 
             String resultFileName = mergeSorter.sort(firstFileStream, secondFileStream);
             fileManager.putFileName(resultFileName);
+
         } catch (FileNotFoundException e) {
             System.err.println(e.getLocalizedMessage());
             fileManager.putFileName(isFirstCorrect ? fileNames.getFirst() : fileNames.getSecond());

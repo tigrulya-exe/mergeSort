@@ -37,8 +37,8 @@ public class  MergeSorter <T>{
                 writer.println(rightValue);
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NumberFormatException e) {
+            System.out.println(e.getLocalizedMessage());
         }
 
         return resultFileName;
