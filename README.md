@@ -4,7 +4,7 @@ Small program for sorting several already sorted (or partially sorted) files int
 Actual jar file:
 https://drive.google.com/file/d/12FHgBPwuQvzRR8AaJaPmUg3pPE_P8mZW
 
-You can create a jar file yourself or download actual version from link above.
+You can create a jar file yourself or download relevant version from link above.
 
 # Options
 
