@@ -5,6 +5,9 @@ import nsu.manasyan.mergeSort.util.FileManager;
 import nsu.manasyan.mergeSort.util.Pair;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
 
 public class ThreadTask <T> implements Runnable {
@@ -22,17 +25,21 @@ public class ThreadTask <T> implements Runnable {
     @Override
     public void run() {
         Pair<String> fileNames = fileManager.getFileNames();
-        if(fileNames == null){
-            return;
-        }
 
         MergeSorter<T> mergeSorter = new MergeSorter<>(extractor,comparator);
-        try {
-            String resultFileName = mergeSorter.sort(new FileInputStream(fileNames.getFirst()),
-                    new FileInputStream(fileNames.getSecond()));
+        boolean isFirstCorrect = Files.exists(Path.of(fileNames.getFirst()));
+
+        try(FileInputStream firstFileStream = new FileInputStream(fileNames.getFirst());
+            FileInputStream secondFileStream = new FileInputStream(fileNames.getSecond())){
+
+            String resultFileName = mergeSorter.sort(firstFileStream, secondFileStream);
             fileManager.putFileName(resultFileName);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.println(e.getLocalizedMessage());
+            fileManager.putFileName(isFirstCorrect ? fileNames.getFirst() : fileNames.getSecond());
+        } catch (IOException e) {
+            System.err.println(e.getLocalizedMessage());
         }
+
     }
 }

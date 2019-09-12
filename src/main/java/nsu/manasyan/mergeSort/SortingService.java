@@ -21,7 +21,7 @@ public class SortingService {
 
     private MergeSortOptions options;
 
-    private static final int TIMEOUT_SEC = 10;
+    private static final int TIMEOUT_SEC = 99;
 
     private static final String FILES_DIRECTORY_NAME = "tmpFiles";
 
