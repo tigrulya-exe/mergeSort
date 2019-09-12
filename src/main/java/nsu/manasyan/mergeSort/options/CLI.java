@@ -1,5 +1,6 @@
 package nsu.manasyan.mergeSort.options;
 
+import nsu.manasyan.mergeSort.exceptions.WrongArgumentException;
 import org.apache.commons.cli.*;
 
 public class CLI {
@@ -8,6 +9,7 @@ public class CLI {
     private String[] args;
 
     private static final int OUTFILE_INDEX = 0;
+    private static final int MIN_FILENAMES_COUNT = 2;
 
     public CLI(String... args) {
         this.args = args;
@@ -23,6 +25,10 @@ public class CLI {
         mergeSortOptions.setSortingOrder(commandLine.hasOption("d") ? SortingOrder.DESCENDING : SortingOrder.ASCENDING);
 
         var fileNames = commandLine.getArgList();
+
+        if (fileNames.size() < MIN_FILENAMES_COUNT){
+            throw new WrongArgumentException("Wrong filenames count. Must be not lesser than " + MIN_FILENAMES_COUNT);
+        }
 
         mergeSortOptions.setOutFileName(fileNames.get(OUTFILE_INDEX));
         fileNames.remove(OUTFILE_INDEX);
