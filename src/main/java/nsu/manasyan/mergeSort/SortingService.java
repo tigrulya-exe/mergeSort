@@ -4,7 +4,6 @@ import nsu.manasyan.mergeSort.arguments.MergeSortOptions;
 import nsu.manasyan.mergeSort.arguments.SortingOrder;
 import nsu.manasyan.mergeSort.factories.TaskFactory;
 import nsu.manasyan.mergeSort.util.FileManager;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,28 +21,30 @@ public class SortingService {
 
     private MergeSortOptions options;
 
-    private static final int TIMEOUT = 10;
+    private static final int TIMEOUT_SEC = 10;
+
+    private static final String FILES_DIRECTORY_NAME = "tmpFiles";
 
     public SortingService(MergeSortOptions options) {
         this.options = options;
         this.fileManager = new FileManager(options.getInFileNames());
     }
 
-    public void start() {
+    public void start() throws IOException {
         var threadTask = TaskFactory.getInstance().getThreadTask(options.getContentType(), fileManager, getComparator(options.getSortingOrder()));
 
-        while (!fileManager.isFinished()) {
-            executorService.submit(threadTask);
-        }
-        executorService.shutdown();
-
         try {
-            executorService.awaitTermination(TIMEOUT, TimeUnit.SECONDS);
-            copyFile(fileManager.getLastFileName(), options.getOutFileName());
-            Files.walk(Path.of("tmpFiles")).map(Path::toFile).forEach(File::delete);
-        } catch (Exception e) {
+            while (!fileManager.isFinished()) {
+                executorService.submit(threadTask);
+            }
+            executorService.shutdown();
+            executorService.awaitTermination(TIMEOUT_SEC, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        brushUpFiles();
     }
 
     private <T extends Comparable<T>> Comparator<T> getComparator(SortingOrder sortingOrder) {
@@ -52,5 +53,10 @@ public class SortingService {
 
     private void copyFile(String sourcePath, String destinationPath) throws IOException {
         Files.copy(Paths.get(sourcePath), new FileOutputStream(destinationPath));
+    }
+
+    private void brushUpFiles() throws IOException {
+        copyFile(fileManager.getLastFileName(), options.getOutFileName());
+        Files.walk(Path.of(FILES_DIRECTORY_NAME)).map(Path::toFile).forEach(File::delete);
     }
 }

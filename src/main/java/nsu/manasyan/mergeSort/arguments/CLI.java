@@ -14,25 +14,19 @@ public class CLI {
         addOptions();
     }
 
-    public MergeSortOptions parse(){
+    public MergeSortOptions parse() throws ParseException {
         MergeSortOptions mergeSortOptions = new MergeSortOptions();
 
-        try{
-            CommandLineParser parser = new DefaultParser();
-            CommandLine commandLine = parser.parse(options, args);
+        CommandLine commandLine = new DefaultParser().parse(options, args);
 
-            mergeSortOptions.setContentType(commandLine.hasOption("s") ? ContentType.STRING : ContentType.INTEGER);
-            mergeSortOptions.setSortingOrder(commandLine.hasOption("d") ? SortingOrder.DESCENDING : SortingOrder.ASCENDING);
+        mergeSortOptions.setContentType(commandLine.hasOption("s") ? ContentType.STRING : ContentType.INTEGER);
+        mergeSortOptions.setSortingOrder(commandLine.hasOption("d") ? SortingOrder.DESCENDING : SortingOrder.ASCENDING);
 
-            var fileNames =  commandLine.getArgList();
+        var fileNames = commandLine.getArgList();
 
-            mergeSortOptions.setOutFileName(fileNames.get(OUTFILE_INDEX));
-            fileNames.remove(OUTFILE_INDEX);
-            mergeSortOptions.setInFileNames(fileNames);
-
-        } catch (ParseException e) {
-            System.err.println(e.getLocalizedMessage());
-        }
+        mergeSortOptions.setOutFileName(fileNames.get(OUTFILE_INDEX));
+        fileNames.remove(OUTFILE_INDEX);
+        mergeSortOptions.setInFileNames(fileNames);
 
         return mergeSortOptions;
     }
