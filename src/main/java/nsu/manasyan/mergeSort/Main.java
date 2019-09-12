@@ -1,7 +1,7 @@
 package nsu.manasyan.mergeSort;
 
-import nsu.manasyan.mergeSort.arguments.CLI;
-import nsu.manasyan.mergeSort.arguments.MergeSortOptions;
+import nsu.manasyan.mergeSort.options.CLI;
+import nsu.manasyan.mergeSort.options.MergeSortOptions;
 
 public class Main {
     public static void main(String[] args) {

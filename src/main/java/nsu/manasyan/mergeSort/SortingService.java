@@ -1,7 +1,7 @@
 package nsu.manasyan.mergeSort;
 
-import nsu.manasyan.mergeSort.arguments.MergeSortOptions;
-import nsu.manasyan.mergeSort.arguments.SortingOrder;
+import nsu.manasyan.mergeSort.options.MergeSortOptions;
+import nsu.manasyan.mergeSort.options.SortingOrder;
 import nsu.manasyan.mergeSort.factories.TaskFactory;
 import nsu.manasyan.mergeSort.util.FileManager;
 import java.io.*;
@@ -45,7 +45,7 @@ public class SortingService {
             e.printStackTrace();
         }
 
-        brushUpFiles();
+        cleanUpTmpFiles();
     }
 
     private void checkFilesDirectory() throws IOException {
@@ -62,8 +62,9 @@ public class SortingService {
         Files.copy(Paths.get(sourcePath), new FileOutputStream(destinationPath));
     }
 
-    private void brushUpFiles() throws IOException {
+    private void cleanUpTmpFiles() throws IOException {
         copyFile(fileManager.getLastFileName(), options.getOutFileName());
         Files.walk(Path.of(FILES_DIRECTORY_NAME)).map(Path::toFile).forEach(File::delete);
+        new File(FILES_DIRECTORY_NAME).delete();
     }
 }

@@ -1,4 +1,4 @@
-package nsu.manasyan.mergeSort.arguments;
+package nsu.manasyan.mergeSort.options;
 
 import org.apache.commons.cli.*;
 

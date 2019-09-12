@@ -1,4 +1,4 @@
-package nsu.manasyan.mergeSort.arguments;
+package nsu.manasyan.mergeSort.options;
 
 import java.util.List;
 

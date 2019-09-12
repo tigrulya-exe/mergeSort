@@ -1,4 +1,4 @@
-package nsu.manasyan.mergeSort.arguments;
+package nsu.manasyan.mergeSort.options;
 
 public enum ContentType {
     INTEGER,
