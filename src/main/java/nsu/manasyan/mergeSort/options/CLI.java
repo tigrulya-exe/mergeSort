@@ -17,22 +17,28 @@ public class CLI {
     }
 
     public MergeSortOptions parse() throws ParseException {
+
         MergeSortOptions mergeSortOptions = new MergeSortOptions();
+        try {
+            CommandLine commandLine = new DefaultParser().parse(options, args);
 
-        CommandLine commandLine = new DefaultParser().parse(options, args);
+            mergeSortOptions.setContentType(commandLine.hasOption("s") ? ContentType.STRING : ContentType.INTEGER);
+            mergeSortOptions.setSortingOrder(commandLine.hasOption("d") ? SortingOrder.DESCENDING : SortingOrder.ASCENDING);
 
-        mergeSortOptions.setContentType(commandLine.hasOption("s") ? ContentType.STRING : ContentType.INTEGER);
-        mergeSortOptions.setSortingOrder(commandLine.hasOption("d") ? SortingOrder.DESCENDING : SortingOrder.ASCENDING);
+            var fileNames = commandLine.getArgList();
 
-        var fileNames = commandLine.getArgList();
+            if (fileNames.size() < MIN_FILENAMES_COUNT) {
+                throw new WrongArgumentException("Wrong filenames count. Must be not lesser than " + MIN_FILENAMES_COUNT);
+            }
 
-        if (fileNames.size() < MIN_FILENAMES_COUNT){
-            throw new WrongArgumentException("Wrong filenames count. Must be not lesser than " + MIN_FILENAMES_COUNT);
+            mergeSortOptions.setOutFileName(fileNames.get(OUTFILE_INDEX));
+            fileNames.remove(OUTFILE_INDEX);
+            mergeSortOptions.setInFileNames(fileNames);
         }
-
-        mergeSortOptions.setOutFileName(fileNames.get(OUTFILE_INDEX));
-        fileNames.remove(OUTFILE_INDEX);
-        mergeSortOptions.setInFileNames(fileNames);
+        catch (ParseException ex){
+            printUsage();
+            throw ex;
+        }
 
         return mergeSortOptions;
     }
@@ -51,5 +57,10 @@ public class CLI {
         sortingOrder.setRequired(false);
 
         options.addOptionGroup(sortingOrder);
+    }
+
+    private void printUsage(){
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("mergSort", options,  true);
     }
 }
