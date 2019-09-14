@@ -5,9 +5,7 @@ import nsu.manasyan.mergeSort.options.SortingOrder;
 import nsu.manasyan.mergeSort.factories.TaskFactory;
 import nsu.manasyan.mergeSort.util.FileManager;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Comparator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,6 +29,7 @@ public class SortingService {
     }
 
     public void start() throws IOException {
+        checkIfSingleFile();
         checkFilesDirectory();
         var threadTask = TaskFactory.getInstance().getThreadTask(options.getContentType(), fileManager, getComparator(options.getSortingOrder()));
 
@@ -40,12 +39,15 @@ public class SortingService {
             }
             executorService.shutdown();
             executorService.awaitTermination(TIMEOUT_SEC, TimeUnit.SECONDS);
+            cleanUpTmpFiles();
         }
         catch (InterruptedException e) {
             e.printStackTrace();
         }
+        catch (NoSuchFileException nse){
+            throw new NoSuchFileException("No such file: " + nse.getLocalizedMessage());
+        }
 
-        cleanUpTmpFiles();
     }
 
     private void checkFilesDirectory() throws IOException {
@@ -66,5 +68,15 @@ public class SortingService {
         copyFile(fileManager.getLastFileName(), options.getOutFileName());
         Files.walk(Path.of(FILES_DIRECTORY_NAME)).map(Path::toFile).forEach(File::delete);
         new File(FILES_DIRECTORY_NAME).delete();
+    }
+
+    private void checkIfSingleFile() throws IOException {
+        try {
+            if (options.getInFileNames().size() == 1) {
+                copyFile(options.getInFileNames().get(0), options.getOutFileName());
+            }
+        } catch (NoSuchFileException nfe) {
+            throw new NoSuchFileException("No such file: " + nfe.getLocalizedMessage());
+        }
     }
 }

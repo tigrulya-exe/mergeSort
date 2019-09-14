@@ -10,7 +10,7 @@ public class Main {
             SortingService service = new SortingService(options);
             service.start();
         } catch (Exception ex) {
-            System.err.println(ex.getLocalizedMessage());
+            System.out.println(ex.getLocalizedMessage());
         }
     }
 }

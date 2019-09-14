@@ -36,10 +36,10 @@ public class ThreadTask <T> implements Runnable {
             fileManager.putFileName(resultFileName);
 
         } catch (FileNotFoundException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
             fileManager.putFileName(isFirstCorrect ? fileNames.getFirst() : fileNames.getSecond());
         } catch (IOException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
 
     }

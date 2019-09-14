@@ -28,6 +28,7 @@ public class CLI {
             var fileNames = commandLine.getArgList();
 
             if (fileNames.size() < MIN_FILENAMES_COUNT) {
+                printUsage();
                 throw new WrongArgumentException("Wrong filenames count. Must be not lesser than " + MIN_FILENAMES_COUNT);
             }
 
@@ -61,6 +62,6 @@ public class CLI {
 
     private void printUsage(){
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("mergSort", options,  true);
+        formatter.printHelp("mergeSort", "",  options,   "After keys write output file and input file(s)", true);
     }
 }

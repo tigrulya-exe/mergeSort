@@ -37,7 +37,7 @@ public class  MergeSorter <T>{
                 writer.println(rightValue);
             }
 
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
         }
 
@@ -55,9 +55,13 @@ public class  MergeSorter <T>{
     private T getValue(BufferedReader reader, Boolean condition, T value) throws IOException {
         T newValue;
         while(condition){
-            newValue = extractor.get(reader.readLine());
-            if(value == null || newValue == null || comparator.compare(value, newValue) <= 0 ){
-                return newValue;
+            try {
+                newValue = extractor.get(reader.readLine());
+                if (value == null || newValue == null || comparator.compare(value, newValue) <= 0) {
+                    return newValue;
+                }
+            }catch (NumberFormatException nfe){
+                System.out.println("Wrong format " +  nfe.getLocalizedMessage());
             }
         }
 
