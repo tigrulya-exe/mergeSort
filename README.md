@@ -2,7 +2,7 @@
 Small program for sorting several already sorted (or partially sorted) files into supplied out file using merge sort (https://en.wikipedia.org/wiki/Merge_sort).
 
 Actual jar file:
-https://drive.google.com/file/d/12FHgBPwuQvzRR8AaJaPmUg3pPE_P8mZW
+https://drive.google.com/file/d/1OayYgqyn-nrVJM-S6XRpvoWvgnkjEW6s
 
 You can create a jar file yourself or download relevant version from link above.
 
